@@ -15,7 +15,7 @@ client.once('ready', () => {
 	antispam(client, {
         limitUntilWarn: 5, // The amount of messages allowed to send within the interval(time) before getting a warn.
         limitUntilMuted: 7, // The amount of messages allowed to send within the interval(time) before getting a muted.
-        interval: 4000, // The interval(time) where the messages are sent. Practically if member X sent 5+ messages within 2 seconds, he get muted. (1000 milliseconds = 1 second, 2000 milliseconds = 2 seconds etc etc)
+        interval: 10000, // The interval(time) where the messages are sent. Practically if member X sent 5+ messages within 2 seconds, he get muted. (1000 milliseconds = 1 second, 2000 milliseconds = 2 seconds etc etc)
         warningMessage: "if you don't stop from spamming, I'm going to mute you!", // Message you get when you are warned!
         muteMessage: "Was muted for spam.", // Message sent after member X was punished(muted).
         maxDuplicatesWarning: 7,// When people are spamming the same message, this will trigger when member X sent over 7+ messages.
