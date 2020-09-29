@@ -107,7 +107,7 @@ client.on('messageDelete', message => {
 	const channel = message.guild.channels.cache.find(ch => ch.name === 'logs');
 	let deleteEmbed = new Discord.MessageEmbed()
 		.setColor(0x8B0000)
-		.setAuthor(`${message.author.tag}`, message.author.displayAvatarURL)
+		.setAuthor(`${message.author.tag}`, message.author.avatarURL)
 		.setDescription(`A message was deleted in <#${message.channel.id}>`)
 		.addField('Content', message.content)
 		.setFooter(`User ID: ${message.author.id}`)
@@ -119,7 +119,7 @@ client.on('messageUpdate', (oldMessage, newMessage) => {
 	if(oldMessage.content === newMessage.content) return;
 	let UpdatedEmbed = new Discord.MessageEmbed()
 		.setColor(0xFFFF00)
-		.setAuthor(`${newMessage.author.tag}`, newMessage.author.displayAvatarURL)
+		.setAuthor(`${newMessage.author.tag}`, newMessage.author.avatarURL)
 		.setDescription(`A message was updated in <#${oldMessage.channel.id}>`)
 		.addField(`Old Message`, oldMessage.content)
 		.addField(`New Message`, newMessage.content)
