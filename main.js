@@ -103,6 +103,32 @@ client.on('message', async message => {
 		message.reply('there was an error trying to execute that command! Maybe try pinging someone if the command needs a pinged user!');
 	}
 });
+client.on('messageDelete', message => {
+	const channel = message.guild.channels.cache.find(ch => ch.name === 'logs');
+	let deleteEmbed = new Discord.MessageEmbed()
+		.setColor(0x8B0000)
+		.setAuthor(`${message.author.tag}`, message.author.displayAvatarURL)
+		.setTitle(`A message was deleted in <#${message.channel.id}>`)
+		.addField('Content:', message.content)
+		.setFooter(`User ID: ${message.author.id}`)
+		.setTimestamp()
+	channel.send(deleteEmbed);
+});
+client.on('messageUpdate', (oldMessage, newMessage) => {
+	const channel = message.guild.channels.cache.find(ch => ch.name === 'logs');
+	if (oldMessage.type === "messageEmbed") {
+		return;
+	}
+	let UpdatedEmbed = new Discord.MessageEmbed()
+		.setColor(0xFFFF00)
+		.setAuthor(`${newMessage.author.tag}`, newMessage.author.displayAvatarURL)
+		.setTitle(`A message was updated in <#${oldMessage.channel.id}>`)
+		.addField(`Old Message:`, oldMessage.content)
+		.addField(`New Message:`, newMessage.content)
+		.setFooter(`User ID: ${oldMessage.author.id}`)
+		.setTimestamp()
+	channel.send(UpdatedEmbed);
+});
 const applyText = (canvas, text) => {
 	const ctx = canvas.getContext('2d');
 
@@ -152,5 +178,40 @@ client.on('guildMemberAdd', async member => {
 	const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
 
 	channel.send(`Welcome to the server, ${member}!`, attachment);
+});
+client.on('guildMemberRemove', async member => {
+	const channel = member.guild.channels.cache.find(ch => ch.name === '👋𑁍welcome𑁍');
+	if (!channel) return;
+
+	const canvas = Canvas.createCanvas(700, 250);
+	const ctx = canvas.getContext('2d');
+
+	const background = await Canvas.loadImage('./wallpaper.jpg');
+	ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+	ctx.strokeStyle = '#74037b';
+	ctx.strokeRect(0, 0, canvas.width, canvas.height);
+
+	// Slightly smaller text placed above the member's display name
+	ctx.font = '28px sans-serif';
+	ctx.fillStyle = '#ffffff';
+	ctx.fillText('Goodbye,', canvas.width / 2.5, canvas.height / 3.5);
+
+	// Add an exclamation point here and below
+	ctx.font = applyText(canvas, `${member.displayName}!`);
+	ctx.fillStyle = '#ffffff';
+	ctx.fillText(`${member.displayName}!`, canvas.width / 2.5, canvas.height / 1.8);
+
+	ctx.beginPath();
+	ctx.arc(125, 125, 100, 0, Math.PI * 2, true);
+	ctx.closePath();
+	ctx.clip();
+
+	const avatar = await Canvas.loadImage(member.user.displayAvatarURL({ format: 'jpg' }));
+	ctx.drawImage(avatar, 25, 25, 200, 200);
+
+	const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'goodbye-image.png');
+
+	channel.send(`Cya soon, **${member.tag}**!`, attachment);
 });
 client.login(process.env.TOKEN)
