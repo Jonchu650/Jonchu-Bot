@@ -115,7 +115,7 @@ client.on('messageDelete', message => {
 	channel.send(deleteEmbed);
 });
 client.on('messageUpdate', (oldMessage, newMessage) => {
-	const channel = message.guild.channels.cache.find(ch => ch.name === 'logs');
+	const channel = oldMessage.guild.channels.cache.find(ch => ch.name === 'logs');
 	if(oldMessage.content === newMessage.content) return;
 	let UpdatedEmbed = new Discord.MessageEmbed()
 		.setColor(0xFFFF00)
