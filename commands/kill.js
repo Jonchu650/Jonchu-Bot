@@ -6,6 +6,7 @@ module.exports = {
     usage: '<user>',
     execute(message, args) {
         const killedUser = message.mentions.users.first();
+        if (!killedUser) return message.channel.send('Ping a user to kill them ;-;')
         if (killedUser.id === '750573070669840475') {
             message.channel.send('I am un-killable.')
         } else if (killedUser === message.author) {
