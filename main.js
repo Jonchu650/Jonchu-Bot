@@ -30,6 +30,7 @@ client.once('ready', () => {
 		.then(presence => console.log(`Activity set to '${presence.activities[0].name}'`))
 });
 client.on('message', async message => {
+	client.emit('checkMessage', message);
 	if (!db[message.author.id]) db[message.author.id] = {
 		xp: 0,
 		level: 0
