@@ -5,6 +5,7 @@ module.exports = {
     usage: '<user>',
     execute(message, args) {
         const snuggleduser = message.mentions.users.first();
+        if (!snuggleduser) return message.channel.send('Ping a user to snuggle them!')
         if (snuggleduser.id === '750573070669840475') {
             message.channel.send(':flushed:')
         } else if (snuggleduser === message.author) {
