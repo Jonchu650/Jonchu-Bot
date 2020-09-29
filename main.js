@@ -15,7 +15,7 @@ client.once('ready', () => {
 	antispam(client, {
         limitUntilWarn: 10, // The amount of messages allowed to send within the interval(time) before getting a warn.
         limitUntilMuted: 15, // The amount of messages allowed to send within the interval(time) before getting a muted.
-        interval: 7000, // The interval(time) where the messages are sent. Practically if member X sent 5+ messages within 2 seconds, he get muted. (1000 milliseconds = 1 second, 2000 milliseconds = 2 seconds etc etc)
+        interval: 6000, // The interval(time) where the messages are sent. Practically if member X sent 5+ messages within 2 seconds, he get muted. (1000 milliseconds = 1 second, 2000 milliseconds = 2 seconds etc etc)
         warningMessage: "if you don't stop from spamming, I'm going to mute you!", // Message you get when you are warned!
         muteMessage: "Was muted for spam.", // Message sent after member X was punished(muted).
         maxDuplicatesWarning: 6,// When people are spamming the same message, this will trigger when member X sent over 7+ messages.
@@ -107,7 +107,7 @@ client.on('messageDelete', message => {
 	const channel = message.guild.channels.cache.find(ch => ch.name === 'logs');
 	let deleteEmbed = new Discord.MessageEmbed()
 		.setColor(0x8B0000)
-		.setAuthor(`${message.author.tag}`, message.author.avatarURL)
+		.setAuthor(`${message.author.tag}`, message.author.avatarURL())
 		.setDescription(`A message was deleted in <#${message.channel.id}>`)
 		.addField('Content', message.content)
 		.setFooter(`User ID: ${message.author.id}`)
@@ -119,7 +119,7 @@ client.on('messageUpdate', (oldMessage, newMessage) => {
 	if(oldMessage.content === newMessage.content) return;
 	let UpdatedEmbed = new Discord.MessageEmbed()
 		.setColor(0xFFFF00)
-		.setAuthor(`${newMessage.author.tag}`, newMessage.author.avatarURL)
+		.setAuthor(`${newMessage.author.tag}`, newMessage.author.avatarURL())
 		.setDescription(`A message was updated in <#${oldMessage.channel.id}>`)
 		.addField(`Old Message`, oldMessage.content)
 		.addField(`New Message`, newMessage.content)
