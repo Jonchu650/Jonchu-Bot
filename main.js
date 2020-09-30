@@ -212,5 +212,6 @@ client.on('guildMemberRemove', async member => {
 
 	channel.send(`Cya soon, **${member.tag}**!`, attachment).then(sentMessage => {
 	sentMessage.react('748627665233248347');
+	});
 });
 client.login(process.env.TOKEN)
