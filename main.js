@@ -32,36 +32,6 @@ client.once('ready', () => {
 });
 client.on('message', async message => {
 	client.emit('checkMessage', message);
-	if (!db[message.author.id]) db[message.author.id] = {
-		xp: 0,
-		level: 0
-	};
-	db[message.author.id].xp++;
-	let userInfo = db[message.author.id];
-	if (userInfo.xp > 100) {
-		userInfo.level++
-		userInfo.xp = 0
-		message.reply(`Congratulations, you leveled up to level ${userInfo.level}`)
-	}
-	if (!message.content.startsWith(prefix) || message.author.bot) return;
-	if (message.content.startsWith(`${prefix}rank`)) {
-		let userInfo = db[message.author.id];
-		let member = message.mentions.members.first();
-		let embed = new Discord.MessageEmbed()
-			.setColor(0x4286f4)
-			.addField("Level", userInfo.level)
-			.addField("XP", userInfo.xp + "/100");
-		if (!member) return message.channel.send(embed)
-		let memberInfo = db[member.id]
-		let embed2 = new Discord.MessageEmbed()
-			.setColor(0x4286f4)
-			.addField("Level", memberInfo.level)
-			.addField("XP", memberInfo.xp + "/100")
-		message.channel.send(embed2)
-		fs.writeFile("./database.json", JSON.stringify(db), (x) => {
-			if (x) console.error(x)
-		});
-	}
 	if (message.content.startsWith(`${prefix}gay`)) {
 		const loluser = message.mentions.users.first() || message.author;
 		const canvas = Canvas.createCanvas(200, 200);
