@@ -2,7 +2,6 @@ const Discord = require('discord.js');
 module.exports = {
     name: 'avatar',
     description: 'A test command for the command handler.',
-    args: true,
     usage: '<user>',
     aliases: ['icon', 'pfp'],
     execute(message, args) {
