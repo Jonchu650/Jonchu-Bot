@@ -48,7 +48,7 @@ client.on('message', async message => {
 		message.channel.send(`Here is **${loluser.username}**'s gay image, Remember Jonchu is still working on it to make it look better!`, attachment)
 	}
 
-	const args = message.content.slice(prefix.length).trim().split(' ');
+	const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
 
 	const command = client.commands.get(commandName)
