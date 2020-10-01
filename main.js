@@ -82,6 +82,9 @@ client.on('messageDelete', message => {
 		.addField('Content', message.content)
 		.setFooter(`User ID: ${message.author.id}`)
 		.setTimestamp()
+	if (message.attachment) {
+		deleteEmbed.setImage(message.attachment)
+	}
 	channel.send(deleteEmbed);
 });
 client.on('messageUpdate', (oldMessage, newMessage) => {
