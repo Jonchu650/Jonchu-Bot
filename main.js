@@ -6,7 +6,6 @@ client.commands = new Discord.Collection();
 const antispam = require('better-discord-antispam');
 const Canvas = require('canvas');
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-let db = JSON.parse(fs.readFileSync("./database.json", "utf8"));
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
 	client.commands.set(command.name, command);
