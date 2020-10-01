@@ -30,6 +30,7 @@ client.once('ready', () => {
 		.then(presence => console.log(`Activity set to '${presence.activities[0].name}'`))
 });
 client.on('message', async message => {
+	if (!message.content.startsWith(prefix) || message.author.bot) return;
 	client.emit('checkMessage', message);
 	if (message.content.startsWith(`${prefix}gay`)) {
 		const loluser = message.mentions.users.first() || message.author;
