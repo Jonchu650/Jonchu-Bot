@@ -3,7 +3,6 @@ const Discord = require('discord.js');
 const { prefix } = require('./config.json');
 const client = new Discord.Client({ partials: ['MESSAGE', 'CHANNEL', 'REACTION'] });
 client.commands = new Discord.Collection();
-const antispam = require('better-discord-antispam');
 const Canvas = require('canvas');
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for (const file of commandFiles) {
@@ -11,26 +10,12 @@ for (const file of commandFiles) {
 	client.commands.set(command.name, command);
 }
 client.once('ready', () => {
-	antispam(client, {
-        limitUntilWarn: 10, // The amount of messages allowed to send within the interval(time) before getting a warn.
-        limitUntilMuted: 15, // The amount of messages allowed to send within the interval(time) before getting a muted.
-        interval: 6000, // The interval(time) where the messages are sent. Practically if member X sent 5+ messages within 2 seconds, he get muted. (1000 milliseconds = 1 second, 2000 milliseconds = 2 seconds etc etc)
-        warningMessage: "if you don't stop from spamming, I'm going to mute you!", // Message you get when you are warned!
-        muteMessage: "Was muted for spam.", // Message sent after member X was punished(muted).
-        maxDuplicatesWarning: 6,// When people are spamming the same message, this will trigger when member X sent over 7+ messages.
-        maxDuplicatesMute: 10, // The limit where member X get muted after sending too many messages(10+).
-        ignoredRoles: ["♡Admin♡"], // The members with this role(or roles) will be ignored if they have it. Suggest to not add this to any random guys. Also it's case sensitive.
-        mutedRole: "Muted", // Here you put the name of the role that should not let people write/speak or anything else in your server. If there is no role set, by default, the module will attempt to create the role for you & set it correctly for every channel in your server. It will be named "muted".
-        timeMuted: 1000 * 600, // This is how much time member X will be muted. if not set, default would be 10 min.
-	logChannel: "logs"
-      });
 	console.log(`${client.user.tag} Is now online.`); //says this when it goes back up
 
 	client.user.setActivity(`Jonchu screaming... | ${prefix}help`, { type: 'LISTENING' })
 		.then(presence => console.log(`Activity set to '${presence.activities[0].name}'`))
 });
 client.on('message', async message => {
-	client.emit('checkMessage', message);
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
