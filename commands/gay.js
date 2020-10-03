@@ -1,4 +1,5 @@
 const Canvas = require('canvas');
+const Discord = require('discord.js');
 module.exports = {
     name: 'gay',
     description: 'Make someones pfp or your own have a rainbow flag!',
