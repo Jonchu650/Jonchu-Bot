@@ -30,14 +30,6 @@ client.once('ready', () => {
 		.then(presence => console.log(`Activity set to '${presence.activities[0].name}'`))
 });
 client.on('message', async message => {
-	const blacklist = require('./blacklist.json');
-	const blackListUsers = Object.keys(blacklist);
-	let listed = false;
-	blackListUsers.forEach(id => {
-		if (message.author.id === id) listed = true;
-	})
-
-	if (listed === true) return;
 	client.emit('checkMessage', message);
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
