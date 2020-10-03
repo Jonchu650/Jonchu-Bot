@@ -30,25 +30,16 @@ client.once('ready', () => {
 		.then(presence => console.log(`Activity set to '${presence.activities[0].name}'`))
 });
 client.on('message', async message => {
-	if (!message.content.startsWith(prefix) || message.author.bot) return;
+	const blacklist = require('./blacklist.json');
+	const blackListUsers = Object.keys(blacklist);
+	let listed = false;
+	blackListUsers.forEach(id => {
+		if (message.author.id === id) listed = true;
+	})
+
+	if (listed === true) return;
 	client.emit('checkMessage', message);
-	if (message.content.startsWith(`${prefix}gay`)) {
-		const loluser = message.mentions.users.first() || message.author;
-		const canvas = Canvas.createCanvas(200, 200);
-		const ctx = canvas.getContext('2d');
-
-		ctx.globalAlpha = 1.0;
-		const avatar = await Canvas.loadImage(loluser.displayAvatarURL({ format: 'jpg' }));
-		ctx.drawImage(avatar, 0, 0, 200, 200);
-		ctx.globalAlpha = 0.6;
-		const GAY = await Canvas.loadImage('./unknown.png');
-		ctx.drawImage(GAY, 0, 0, 200, 200)
-
-		const attachment = new Discord.MessageAttachment(canvas.toBuffer(), 'gayuser.png');
-
-		message.channel.send(`Here is **${loluser.username}**'s gay image, Remember Jonchu is still working on it to make it look better!`, attachment)
-	}
-
+	if (!message.content.startsWith(prefix) || message.author.bot) return;
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const commandName = args.shift().toLowerCase();
 
