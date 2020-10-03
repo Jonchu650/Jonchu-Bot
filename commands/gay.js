@@ -3,7 +3,7 @@ module.exports = {
     name: 'gay',
     description: 'Make someones pfp or your own have a rainbow flag!',
     usage: '[user]',
-    execute(message, args) {
+    async execute(message, args) {
         const loluser = message.mentions.users.first() || message.author;
 		const canvas = Canvas.createCanvas(200, 200);
 		const ctx = canvas.getContext('2d');
